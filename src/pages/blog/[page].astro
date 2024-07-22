@@ -1,0 +1,79 @@
+---
+import type { GetStaticPaths } from "astro";
+import TypeBlogPost from '@components/blog/TypeBlogPost.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '@config/site-config';
+import BlogLayout from '@layouts/BlogLayout.astro';
+
+export const getStaticPaths = ( async ({ paginate }) => {
+
+    const posts = await getCollection('blog');
+    
+    return paginate(posts, { pageSize: 2 });
+}) satisfies GetStaticPaths;
+
+
+const { page } = Astro.props;
+const title = `${ siteConfig.title } Páginado`;
+
+---
+
+<BlogLayout title={ title }>
+
+	<section class="bg-inherit">
+        <div class="container px-6  mx-auto">
+            <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">Listado de posts - página { page.currentPage }</h1>
+      
+            <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
+              {
+                page.data.map((post) => (
+                  <TypeBlogPost post={post} />
+                ))
+              }
+            </div>
+        </div>
+      </section>
+
+    <section class="flex gap-x-5 justify-center items-center  w-full h-16">
+        <a class:list={[
+            "btn",
+            {
+                "disabled": page.currentPage === 1
+            }
+        
+        ]} href={page.url.prev}>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M15 6l-6 6l6 6" />
+              </svg>
+        </a>
+        <span class="font-semibold text-xl underline decoration-wavy decoration-slate-400 underline-offset-8">página { page.currentPage }</span>
+        <a class:list={[
+            "btn",
+            {
+                "disabled": page.currentPage === page.lastPage
+            }
+        ]} href={page.url.next}>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M9 6l6 6l-6 6" />
+              </svg>
+        </a>
+    </section>
+
+</BlogLayout>
+
+
+<style>
+    .btn {
+        @apply bg-slate-600 rounded-full p-2;
+    }
+    .btn:hover {
+        @apply bg-slate-700;
+    }
+
+    .disabled {
+        @apply opacity-50 cursor-not-allowed;
+    }
+</style>

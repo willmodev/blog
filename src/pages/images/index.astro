@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro'
+
+import post05Img  from '@assets/post-05.png';
+import { Image } from 'astro:assets';
+---
+
+
+
+
+<BaseLayout title="Home">
+
+
+    <img src='/assets/images/post-05.png' alt="Imagen post" width="200" height="200" />    
+
+    <Image src={post05Img} alt="Imagen post" width="200" height="200" />
+
+
+    <div class="" style="height: 1200px;">
+        hola
+    </div>
+
+    <img loading="lazy" src='/assets/images/post-01.png' alt="Imagen post" width="200" height="200" />    
+
+</BaseLayout>
