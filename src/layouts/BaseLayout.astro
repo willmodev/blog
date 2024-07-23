@@ -1,9 +1,9 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
-    title: string;
-    description?: string;
+	title: string;
+	description?: string;
 }
 
 const { title, description } = Astro.props;
@@ -13,16 +13,23 @@ const { title, description } = Astro.props;
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="Willinton's Blog"
+			href={new URL("rss.xml", Astro.site)}
+		/>
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-        <meta name="description" content={description} />
+		<meta name="description" content={description} />
+
 
 		<ViewTransitions />
 	</head>
 	<body class="bg-primary text-white">
 		<main class="max-w-screen-md mx-auto">
-            <slot />
-        </main>
+			<slot />
+		</main>
 	</body>
 </html>
