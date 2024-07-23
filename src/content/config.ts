@@ -15,6 +15,7 @@ const blogCollection = defineCollection({
         // author: z.string(),
         author: reference('author'),
         tags: z.array(z.string()),
+        isDraft: z.boolean().default(false)
     })
 })
 
@@ -23,7 +24,12 @@ const authorCollection = defineCollection({
     type: 'data',
     schema: ({ image }) => z.object({
         name: z.string(),
-        avatar: image()
+        avatar: image(),
+        twitter: z.string(),
+        linkedin: z.string(),
+        github: z.string(),
+        bio: z.string(),
+        subtitle: z.string(),
     })
 
 })
