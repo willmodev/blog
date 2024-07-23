@@ -1,14 +1,11 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
 import AuthorCard from '@components/author/AuthorCard.astro';
 import { getCollection } from 'astro:content';
 import BlogLayout from '@layouts/BlogLayout.astro';
 
 
 const authors = await getCollection('author');
-
 ---
-
 
 <BlogLayout title="Authors">
  
